@@ -24,11 +24,10 @@ export class UserService {
   createUser(createUserDto: CreateUserDto): Promise<User> {
     const user: User = new User();
     user.name = createUserDto.name!;
-    user.age = createUserDto.age!;
-    user.email = createUserDto.email!;
     user.username = createUserDto.username!;
+    user.avatar_path = createUserDto.avatar_path!;
+    user.tribe_id = createUserDto.tribe_id!;
     user.password = createUserDto.password!;
-    user.gender = createUserDto.gender!;
     return this.userRepository.save(user);
   }
 
@@ -42,11 +41,11 @@ export class UserService {
 
   /**
    * this function used to get data of use whose id is passed in parameter
-   * @param id is type of number, which represent the id of user.
+   * @param user_id is type of number, which represent the id of user.
    * @returns promise of user
    */
-  viewUser(id: number): Promise<User | null> {
-    return this.userRepository.findOneBy({id});
+  viewUser(user_id: number): Promise<User | null> {
+    return this.userRepository.findOneBy({user_id});
   }
 
   /**
@@ -59,11 +58,10 @@ export class UserService {
   updateUser(id: number, updateUserDto: UpdateUserDto): Promise<User>{
     const user: User = new User();
     user.name = updateUserDto.name!;
-    user.age = updateUserDto.age!;
-    user.email = updateUserDto.email!;
     user.username = updateUserDto.username!;
+    user.avatar_path = updateUserDto.avatar_path!;
+    user.tribe_id = updateUserDto.tribe_id!;
     user.password = updateUserDto.password!;
-    user.id = id;
     return this.userRepository.save(user);
   }
 
@@ -72,7 +70,7 @@ export class UserService {
    * @param id is the type of number, which represent id of user
    * @returns nuber of rows deleted or affected
    */
-  removeUser(id: number): Promise<{ affected?: number | null}> {
-    return this.userRepository.delete(id);
+  removeUser(user_id: number): Promise<{ affected?: number | null}> {
+    return this.userRepository.delete(user_id);
   }
 }

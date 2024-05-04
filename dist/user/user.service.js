@@ -24,31 +24,29 @@ let UserService = class UserService {
     createUser(createUserDto) {
         const user = new user_entity_1.User();
         user.name = createUserDto.name;
-        user.age = createUserDto.age;
-        user.email = createUserDto.email;
         user.username = createUserDto.username;
+        user.avatar_path = createUserDto.avatar_path;
+        user.tribe_id = createUserDto.tribe_id;
         user.password = createUserDto.password;
-        user.gender = createUserDto.gender;
         return this.userRepository.save(user);
     }
     findAllUser() {
         return this.userRepository.find();
     }
-    viewUser(id) {
-        return this.userRepository.findOneBy({ id });
+    viewUser(user_id) {
+        return this.userRepository.findOneBy({ user_id });
     }
     updateUser(id, updateUserDto) {
         const user = new user_entity_1.User();
         user.name = updateUserDto.name;
-        user.age = updateUserDto.age;
-        user.email = updateUserDto.email;
         user.username = updateUserDto.username;
+        user.avatar_path = updateUserDto.avatar_path;
+        user.tribe_id = updateUserDto.tribe_id;
         user.password = updateUserDto.password;
-        user.id = id;
         return this.userRepository.save(user);
     }
-    removeUser(id) {
-        return this.userRepository.delete(id);
+    removeUser(user_id) {
+        return this.userRepository.delete(user_id);
     }
 };
 exports.UserService = UserService;

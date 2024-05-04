@@ -31,18 +31,16 @@ __decorate([
 ], CreateUserDto.prototype, "username", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsEmail)(undefined, { message: 'Please provide valid Email.' }),
     __metadata("design:type", String)
-], CreateUserDto.prototype, "email", void 0);
+], CreateUserDto.prototype, "avatar_path", void 0);
 __decorate([
     (0, class_validator_1.IsInt)(),
     __metadata("design:type", Number)
 ], CreateUserDto.prototype, "age", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsEnum)(['f', 'm', 'u']),
-    __metadata("design:type", String)
-], CreateUserDto.prototype, "gender", void 0);
+    (0, class_validator_1.IsInt)(),
+    __metadata("design:type", Number)
+], CreateUserDto.prototype, "tribe_id", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.Matches)(passwordRegEx, {

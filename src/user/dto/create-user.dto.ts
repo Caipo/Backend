@@ -26,15 +26,13 @@ export class CreateUserDto {
   username: string;
 
   @IsNotEmpty()
-  @IsEmail(undefined, { message: 'Please provide valid Email.' })
-  email: string;
+  avatar_path: string;
 
   @IsInt()
   age: number;
 
-  @IsString()
-  @IsEnum(['f', 'm', 'u'])
-  gender: string;
+  @IsInt()
+  tribe_id: number;
 
   @IsNotEmpty()
   @Matches(passwordRegEx, {

@@ -1,8 +1,8 @@
 export declare class CreateUserDto {
     name: string;
     username: string;
-    email: string;
+    avatar_path: string;
     age: number;
-    gender: string;
+    tribe_id: number;
     password: string;
 }

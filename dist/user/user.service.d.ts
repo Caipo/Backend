@@ -7,9 +7,9 @@ export declare class UserService {
     constructor(userRepository: Repository<User>);
     createUser(createUserDto: CreateUserDto): Promise<User>;
     findAllUser(): Promise<User[]>;
-    viewUser(id: number): Promise<User | null>;
+    viewUser(user_id: number): Promise<User | null>;
     updateUser(id: number, updateUserDto: UpdateUserDto): Promise<User>;
-    removeUser(id: number): Promise<{
+    removeUser(user_id: number): Promise<{
         affected?: number | null;
     }>;
 }

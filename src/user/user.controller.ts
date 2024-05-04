@@ -47,9 +47,9 @@ export class UserController {
    * so the API URL will be
    * GET http://localhost:3000/user/:id
    */
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.viewUser(+id);
+  @Get(':user_id')
+  findOne(@Param('user_id') user_id: string) {
+    return this.userService.viewUser(+user_id);
   }
 
   /**
@@ -57,9 +57,9 @@ export class UserController {
    * so the API URL will be
    * PATCH http://localhost:3000/user/:id
    */
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.updateUser(+id, updateUserDto);
+  @Patch(':user_id')
+  update(@Param('user_id') user_id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.userService.updateUser(+user_id, updateUserDto);
   }
 
   /**
@@ -67,8 +67,8 @@ export class UserController {
    * so the API URL will be
    * DELETE http://localhost:3000/user/:id
    */
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.removeUser(+id);
+  @Delete(':user_id')
+  remove(@Param('user_id') user_id: string) {
+    return this.userService.removeUser(+user_id);
   }
 }

@@ -1,9 +1,8 @@
 export declare class User {
-    id: number;
+    user_id: number;
     name: string;
     username: string;
-    email: string;
-    age: number;
+    avatar_path: string;
+    tribe_id: number;
     password: string;
-    gender: string;
 }

@@ -17,7 +17,7 @@ exports.User = User;
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], User.prototype, "id", void 0);
+], User.prototype, "user_id", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'varchar', length: 30 }),
     __metadata("design:type", String)
@@ -27,21 +27,17 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "username", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'varchar', length: 40 }),
+    (0, typeorm_1.Column)({ type: 'varchar', length: 50 }),
     __metadata("design:type", String)
-], User.prototype, "email", void 0);
+], User.prototype, "avatar_path", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'int' }),
     __metadata("design:type", Number)
-], User.prototype, "age", void 0);
+], User.prototype, "tribe_id", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'varchar' }),
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ type: 'enum', enum: ['m', 'f', 'u'] }),
-    __metadata("design:type", String)
-], User.prototype, "gender", void 0);
 exports.User = User = __decorate([
     (0, typeorm_1.Entity)()
 ], User);
