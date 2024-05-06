@@ -2,7 +2,7 @@ services:
   postgres-db:
     image: "postgres:14.2"
     ports:
-      - 5432:5432
+      - 4200:4200
     restart: always
     environment:
       - POSTGRES_DB=tribal
