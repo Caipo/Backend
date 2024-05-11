@@ -1,4 +1,5 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {User} from "./User";
 
 @Entity({name: 'user_sessions'})
 export class UserSession {
@@ -10,4 +11,7 @@ export class UserSession {
 
     @Column({name: "expire_at", type: "bigint"})
     expireAt: string;
+
+    @ManyToOne(() => User, user => user.sessions)
+    user: User;
 }
