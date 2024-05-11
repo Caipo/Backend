@@ -1,11 +1,11 @@
 import {Module} from "@nestjs/common";
-import {AuthQueriesController} from "src/modules/auth/api/auth.queries.controller";
-import {AuthMutationsController} from "src/modules/auth/api/auth.mutations.controllers";
+import {UserQueriesController} from "src/modules/user/api/user.queries.controller";
+import {UserMutationsController} from "src/modules/user/api/user.mutations.controller";
 
 @Module(
     {
         imports: [],
-        controllers: [AuthQueriesController, AuthMutationsController],
+        controllers: [UserQueriesController, UserMutationsController],
         providers: [],
     }
 )

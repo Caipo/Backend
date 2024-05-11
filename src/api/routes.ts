@@ -9,7 +9,8 @@ export const Paths = {
             getUsers: "users"
         },
         mutations: {
-
+            login: "login",
+            createUser: "create-user",
         }
     },
 }
