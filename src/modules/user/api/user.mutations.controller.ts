@@ -1,5 +1,5 @@
 import {Controller, Post, Req, Res} from "@nestjs/common";
-import {Paths} from "src/api/routes";
+import {Paths} from "src/core/api/routes";
 import {Request, Response} from "express";
 
 @Controller(Paths.user.root)
