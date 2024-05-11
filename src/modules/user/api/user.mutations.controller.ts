@@ -1,4 +1,5 @@
 import {Controller} from "@nestjs/common";
+import {Paths} from "src/api/routes";
 
-@Controller('user-mutations')
+@Controller(Paths.user.root)
 export class UserMutationsController {}

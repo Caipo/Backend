@@ -1,4 +1,10 @@
-import {Controller} from "@nestjs/common";
+import {Controller, Get} from "@nestjs/common";
+import {Paths} from "src/api/routes";
 
-@Controller('user-queries')
-export class UserQueriesController {}
+@Controller(Paths.user.root)
+export class UserQueriesController {
+    @Get(Paths.user.queries.getUsers)
+    getUsers() {
+        return [{id: "1", name: "John Donut"}];
+    }
+}
