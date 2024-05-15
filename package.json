@@ -12,6 +12,7 @@
     "start:local": "npm run set-env:local && nest start --watch",
     "start:dev": "npm run set-env:dev && nest start --watch",
     "start:prod": "npm run set-env:prod && nest start",
+    "gen:migrations": "ts-node utils/initMigrations.ts",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
