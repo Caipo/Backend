@@ -18,6 +18,7 @@ import {UserSession} from "src/core/infrastructure/entities/Auth";
               password: 'password',
               database: 'tribal',
               entities: [User, UserSession],
+              migrations: ["dist/core/infrastructure/migrations/*.js"],
               synchronize: true,
           }
       )
