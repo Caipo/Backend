@@ -6,6 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "migration:create": "typeorm migration:create src/core/infrastructure/migrations/$npm_config_name",
     "set-env:dev": "cp environments/.env.dev .env",
     "set-env:prod": "cp environments/.env.prod .env",
     "set-env:local": "cp environments/.env.local .env",

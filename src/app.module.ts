@@ -18,6 +18,7 @@ import {UserSession} from "src/core/infrastructure/entities/Auth";
               password: 'password',
               database: 'tribal',
               entities: [User, UserSession],
+              migrations: ["src/core/infrastructure/migrations/**/*.ts"],
               retryAttempts: 3,
               migrationsRun: true,
               logging: ["schema", "migration"],
