@@ -20,7 +20,6 @@ import {UserSession} from "src/core/infrastructure/entities/Auth";
               entities: [User, UserSession],
               migrations: ["dist/core/infrastructure/migrations/*.js"],
               retryAttempts: 3,
-              migrationsRun: true,
               logging: ["schema", "migration"],
               migrationsTransactionMode: "all",
           }
