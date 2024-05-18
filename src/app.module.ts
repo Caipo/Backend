@@ -17,9 +17,7 @@ import {UserSession} from "src/core/infrastructure/entities/Auth";
               username: 'postgres',
               password: 'password',
               database: 'tribal',
-              entities: ["dist/core/infrastructure/entities/*.js"],
-              migrations: ["dist/core/infrastructure/migrations/*.js"],
-
+              entities: [User, UserSession],
               retryAttempts: 3,
               migrationsRun: true,
               logging: ["schema", "migration"],
