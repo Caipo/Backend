@@ -1,16 +1,29 @@
-import { Controller, Post, Req, Res } from "@nestjs/common";
+import {Body, Controller, Inject, Post, UsePipes, ValidationPipe} from "@nestjs/common";
 import { Paths } from "src/core/api/routes";
-import { Request, Response } from "express";
+import {CreateUserInput} from "src/modules/user/api/user.mutations.inputs";
+import {ApiUser} from "src/modules/user/api/user.types";
+import {UserServiceDefinition, UserServiceName} from "src/modules/user/domain/user.service.types";
 
 @Controller(Paths.user.root)
+@UsePipes(new ValidationPipe())
 export class UserMutationsController {
-	@Post(Paths.user.mutations.login)
-	login(@Req() request: Request, @Res() response: Response) {
-		response.send("Logged in");
-	}
+	constructor(@Inject(UserServiceName) private userService: UserServiceDefinition) {}
 
 	@Post(Paths.user.mutations.createUser)
-	createUser(@Req() request: Request, @Res() response: Response) {
-		response.send("Created");
+	async createUser(@Body() input: CreateUserInput): Promise<ApiUser> {
+		const serviceUser = await this.userService.createUser({
+			username: input.username,
+			password: input.password,
+		});
+
+		const apiUser: ApiUser = {
+			id: serviceUser.id,
+			profilePictureUrl: serviceUser.profilePictureUrl,
+			displayName: serviceUser.displayName,
+			username: serviceUser.username,
+			biography: serviceUser.biography,
+		}
+
+		return apiUser;
 	}
 }
