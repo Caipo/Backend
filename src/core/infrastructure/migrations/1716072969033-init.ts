@@ -1,9 +1,8 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class Init1716072969033 implements MigrationInterface {
-
-    public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
+	public async up(queryRunner: QueryRunner): Promise<void> {
+		await queryRunner.query(`
             CREATE TABLE "users" (
                 "id" SERIAL NOT NULL,
                 "profile_picture_url" character varying(500) NOT NULL,
@@ -14,7 +13,7 @@ export class Init1716072969033 implements MigrationInterface {
             );
         `);
 
-        await queryRunner.query(`
+		await queryRunner.query(`
             CREATE TABLE "user_sessions" (
                 "id" SERIAL NOT NULL,
                 "created_at" bigint NOT NULL,
@@ -24,11 +23,13 @@ export class Init1716072969033 implements MigrationInterface {
                 CONSTRAINT "FK_user_sessions_userId" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
             );
         `);
-    }
+	}
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`ALTER TABLE "user_sessions" DROP CONSTRAINT "FK_user_sessions_userId";`);
-        await queryRunner.query(`DROP TABLE "user_sessions";`);
-        await queryRunner.query(`DROP TABLE "users";`);
-    }
+	public async down(queryRunner: QueryRunner): Promise<void> {
+		await queryRunner.query(`
+    ALTER TABLE "user_sessions" DROP CONSTRAINT "FK_user_sessions_userId";
+    DROP TABLE "user_sessions";
+    DROP TABLE "users";
+  `);
+	}
 }

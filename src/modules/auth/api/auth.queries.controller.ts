@@ -1,4 +1,4 @@
-import {Controller} from "@nestjs/common";
+import { Controller } from "@nestjs/common";
 
-@Controller('auth-queries')
+@Controller("auth-queries")
 export class AuthQueriesController {}
