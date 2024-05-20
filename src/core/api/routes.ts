@@ -1,16 +1,16 @@
 export const Paths = {
-    root: '/',
-    auth: {
-        root: "auth",
+  root: "/",
+  auth: {
+    root: "auth",
+  },
+  user: {
+    root: "user",
+    queries: {
+      getUsers: "users",
     },
-    user: {
-        root: 'user',
-        queries: {
-            getUsers: "users"
-        },
-        mutations: {
-            login: "login",
-            createUser: "create-user",
-        }
+    mutations: {
+      login: "login",
+      createUser: "create-user",
     },
-}
+  },
+};
