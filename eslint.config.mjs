@@ -1,35 +1,42 @@
+import typescriptParser from '@typescript-eslint/parser';
+import typescriptPlugin from '@typescript-eslint/eslint-plugin';
+import prettierConfig from 'eslint-config-prettier';
+
 export default [
   {
-    parser: "@typescript-eslint/parser",
-    parserOptions: {
-      project: "tsconfig.json",
-      sourceType: "module",
+    files: ['**/*.ts'],
+    languageOptions: {
+      parser: typescriptParser,
+      parserOptions: {
+        project: 'tsconfig.json',
+        sourceType: 'module',
+      },
     },
-    plugins: ["@typescript-eslint/eslint-plugin"],
-    extends: [
-      "plugin:@typescript-eslint/recommended",
-      "prettier/@typescript-eslint",
-      "plugin:prettier/recommended",
-    ],
-    root: true,
-    env: {
-      node: true,
-      jest: true,
+    plugins: {
+      '@typescript-eslint': typescriptPlugin,
     },
-    ignorePatterns: [".eslintrc.js"],
     rules: {
-      "@typescript-eslint/interface-name-prefix": "off",
-      "@typescript-eslint/explicit-function-return-type": "off",
-      "@typescript-eslint/explicit-module-boundary-types": "off",
-      "@typescript-eslint/no-explicit-any": "off",
+      ...typescriptPlugin.configs.recommended.rules,
+      ...prettierConfig.rules,
+      '@typescript-eslint/interface-name-prefix': 'off',
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/explicit-module-boundary-types': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
       quotes: [
-        "error",
-        "double",
+        'error',
+        'double',
         {
           avoidEscape: true,
           allowTemplateLiterals: false,
         },
       ],
     },
+    settings: {},
+  },
+  {
+    ignores: ['.eslintrc.config.mjs'],
+  },
+  {
+    files: ['**/*.ts', '**/*.tsx'],
   },
 ];
