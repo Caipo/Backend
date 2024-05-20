@@ -3,8 +3,8 @@ import { AuthQueriesController } from "src/modules/auth/api/auth.queries.control
 import { AuthMutationsController } from "src/modules/auth/api/auth.mutations.controllers";
 
 @Module({
-  imports: [],
-  controllers: [AuthQueriesController, AuthMutationsController],
-  providers: [],
+	imports: [],
+	controllers: [AuthQueriesController, AuthMutationsController],
+	providers: [],
 })
 export class AuthModule {}

@@ -3,8 +3,8 @@ import { UserQueriesController } from "src/modules/user/api/user.queries.control
 import { UserMutationsController } from "src/modules/user/api/user.mutations.controller";
 
 @Module({
-  imports: [],
-  controllers: [UserQueriesController, UserMutationsController],
-  providers: [],
+	imports: [],
+	controllers: [UserQueriesController, UserMutationsController],
+	providers: [],
 })
 export class UserModule {}
