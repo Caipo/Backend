@@ -2,8 +2,8 @@ import { Module } from "@nestjs/common";
 import { AuthModule } from "src/modules/auth/auth.module";
 import { UserModule } from "src/modules/user/user.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { User } from "src/core/infrastructure/entities/User";
-import { UserSession } from "src/core/infrastructure/entities/Auth";
+import { UserRecord } from "src/core/infrastructure/entities/User";
+import { UserSessionRecord } from "src/core/infrastructure/entities/Auth";
 
 @Module({
 	imports: [
@@ -16,7 +16,7 @@ import { UserSession } from "src/core/infrastructure/entities/Auth";
 			username: "postgres",
 			password: "password",
 			database: "tribal",
-			entities: [User, UserSession],
+			entities: [UserRecord, UserSessionRecord],
 			migrations: ["dist/core/infrastructure/migrations/*.js"],
 			retryAttempts: 3,
 			migrationsRun: true,

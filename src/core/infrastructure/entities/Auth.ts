@@ -1,17 +1,17 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { User } from "./User";
+import { UserRecord } from "./User";
 
 @Entity({ name: "user_sessions" })
-export class UserSession {
-	@PrimaryGeneratedColumn({ name: "id" })
-	id: number;
+export class UserSessionRecord {
+	@PrimaryGeneratedColumn("uuid",{ name: "id" })
+	id: string;
 
 	@Column({ name: "created_at", type: "bigint" })
-	createdAt: string;
+	createdAt: bigint;
 
 	@Column({ name: "expire_at", type: "bigint" })
-	expireAt: string;
+	expireAt: bigint;
 
-	@ManyToOne(() => User, (user) => user.sessions)
-	user: User;
+	@ManyToOne(() => UserRecord, (user) => user.sessions)
+	user: UserRecord;
 }

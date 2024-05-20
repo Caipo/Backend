@@ -1,10 +1,10 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { UserSession } from "./Auth";
+import { UserSessionRecord } from "./Auth";
 
 @Entity({ name: "users" })
-export class User {
-	@PrimaryGeneratedColumn({ name: "id" })
-	id: number;
+export class UserRecord {
+	@PrimaryGeneratedColumn("uuid", { name: "id" })
+	id: string;
 
 	@Column({ name: "profile_picture_url", type: "varchar", length: 500 })
 	profilePictureUrl: string;
@@ -15,15 +15,15 @@ export class User {
 	@Column({ name: "username", type: "varchar", length: 50 })
 	username: string;
 
-	@Column({name: "password", type: "varchar", length: 255, default: "invalidPassword"})
+	@Column({ name: "password", type: "varchar", length: 255, default: "invalidPassword" })
 	password: string;
 
 	@Column({ name: "biography", type: "varchar", length: 2000 })
 	biography: string;
 
 	@Column({ name: "created_at", type: "bigint" })
-	createdAt: string;
+	createdAt: bigint;
 
-	@OneToMany(() => UserSession, (session) => session.user)
-	sessions: UserSession[];
+	@OneToMany(() => UserSessionRecord, (session) => session.user)
+	sessions: UserSessionRecord[];
 }
