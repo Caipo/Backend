@@ -9,6 +9,7 @@ export class Init1716072969033 implements MigrationInterface {
                 "display_name" character varying(50) NOT NULL,
                 "username" character varying(50) NOT NULL,
                 "biography" character varying(2000) NOT NULL,
+                "created_at" bigint NOT NULL,
                 CONSTRAINT "PK_users_id" PRIMARY KEY ("id")
             );
         `);
