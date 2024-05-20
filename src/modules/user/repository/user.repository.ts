@@ -1,22 +1,11 @@
-import { DataSource } from "typeorm"
 
 class User {
-    userName : string;
-    password : string; 
+	userName: string;
+	password: string;
 }
 
+export function registerUser(user: User): User {
+	console.log("asdf");
 
-export async function registerUser(user : User) : User{
-
-    await DataSource
-        .createQueryBuilder()
-        .insert()
-        .into(User)
-        .values([
-            { userName: user['userName'], password: user['password'] },
-        ])
-        .execute()
-    
-
-    return user;
+	return user;
 }
