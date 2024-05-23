@@ -1,7 +1,9 @@
 import { ClassProvider, Injectable } from "@nestjs/common";
 import {
 	RepoCreateUserInput,
+	RepoGetUsersInput,
 	RepoUser,
+	RepoUserList,
 	UserRepositoryDefinition,
 	UserRepositoryName,
 } from "src/modules/user/repository/user.repository.types";
@@ -18,6 +20,12 @@ export class UserRepository implements UserRepositoryDefinition {
 			useClass: UserRepository,
 		};
 	}
+
+    async getUsers({} : RepoGetUsersInput): Promise<RepoUserList>{
+        const data  =  await this.dataSource.getRepository(UserRecord).find()
+        const list : RepoUserList = {users : data}
+        return list;
+    }
 
 	async createUser({ username, password }: RepoCreateUserInput): Promise<RepoUser> {
 		const userToSave = {
