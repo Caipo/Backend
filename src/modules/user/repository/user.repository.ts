@@ -11,7 +11,7 @@ import { UserRecord } from "src/core/infrastructure/entities/User";
 @Injectable()
 export class UserRepository implements UserRepositoryDefinition {
 	constructor(private dataSource: DataSource) {}
-
+    
 	public static Provider(): ClassProvider<UserRepository> {
 		return {
 			provide: UserRepositoryName,

@@ -10,6 +10,7 @@ import {
 	UserRepositoryDefinition,
 	UserRepositoryName,
 } from "src/modules/user/repository/user.repository.types";
+import CryptoJS = require("crypto-js");
 
 @Injectable()
 export class UserService implements UserServiceDefinition {
@@ -37,7 +38,8 @@ export class UserService implements UserServiceDefinition {
 	}
 
 	async createUser({ username, password }: ServiceCreateUserInput): Promise<ServiceUser> {
-		const repoUser: RepoUser = await this.userRepository.createUser({ username: username, password: password });
+        const hash = CryptoJS.SHA256(password).toString();
+		const repoUser: RepoUser = await this.userRepository.createUser({ username: username, password: hash });
 
 		const serviceUser: ServiceUser = {
 			id: repoUser.id,
