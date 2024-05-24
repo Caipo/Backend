@@ -11,7 +11,7 @@ import { UserRecord } from "src/core/infrastructure/entities/User";
 @Injectable()
 export class UserRepository implements UserRepositoryDefinition {
 	constructor(private dataSource: DataSource) {}
-    
+
 	public static Provider(): ClassProvider<UserRepository> {
 		return {
 			provide: UserRepositoryName,
@@ -34,18 +34,23 @@ export class UserRepository implements UserRepositoryDefinition {
 		return repoUsers;
 	}
 
-	async createUser({ username, password }: RepoCreateUserInput): Promise<RepoUser> {
+	async createUser({
+		username,
+		password,
+		createdAt,
+		profilePictureUrl,
+		biography,
+	}: RepoCreateUserInput): Promise<RepoUser> {
 		const userToSave = {
-			profilePictureUrl: "url",
-			displayName: "displayName",
+			profilePictureUrl: profilePictureUrl,
+			displayName: username,
 			username: username,
 			password: password,
-			biography: "biography",
-			createdAt: BigInt(15),
+			biography: biography,
+			createdAt: createdAt,
 		};
 
 		const savedUserRecord = await this.dataSource.getRepository(UserRecord).save(userToSave);
-
 		const repoUser: RepoUser = {
 			id: savedUserRecord.id,
 			profilePictureUrl: savedUserRecord.profilePictureUrl,

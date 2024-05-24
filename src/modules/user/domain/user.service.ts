@@ -10,6 +10,7 @@ import {
 	UserRepositoryDefinition,
 	UserRepositoryName,
 } from "src/modules/user/repository/user.repository.types";
+import { profilePictures } from "src/modules/user/domain/pictures";
 import CryptoJS = require("crypto-js");
 
 @Injectable()
@@ -38,8 +39,20 @@ export class UserService implements UserServiceDefinition {
 	}
 
 	async createUser({ username, password }: ServiceCreateUserInput): Promise<ServiceUser> {
-        const hash = CryptoJS.SHA256(password).toString();
-		const repoUser: RepoUser = await this.userRepository.createUser({ username: username, password: hash });
+		const hash: string = CryptoJS.SHA256(password).toString();
+		const createdAt: bigint = BigInt(Date.now());
+		const defaultBiography: string = "Defualt Bio";
+
+		const randomIndex: number = Math.floor(Math.random() * profilePictures.length);
+		const profilePictureUrl: string = profilePictures[randomIndex];
+
+		const repoUser: RepoUser = await this.userRepository.createUser({
+			username: username,
+			password: hash,
+			createdAt: createdAt,
+			biography: defaultBiography,
+			profilePictureUrl: profilePictureUrl,
+		});
 
 		const serviceUser: ServiceUser = {
 			id: repoUser.id,

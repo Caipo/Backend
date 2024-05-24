@@ -20,4 +20,7 @@ export type RepoUser = {
 export type RepoCreateUserInput = {
 	username: string;
 	password: string;
+	biography: string;
+	profilePictureUrl: string;
+	createdAt: bigint;
 };

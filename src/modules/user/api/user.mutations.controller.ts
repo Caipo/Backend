@@ -8,7 +8,7 @@ import { UserServiceDefinition, UserServiceName } from "src/modules/user/domain/
 @UsePipes(new ValidationPipe())
 export class UserMutationsController {
 	constructor(@Inject(UserServiceName) private userService: UserServiceDefinition) {}
-    
+
 	@Post(Paths.user.mutations.createUser)
 	async createUser(@Body() input: CreateUserInput): Promise<ApiUser> {
 		const serviceUser = await this.userService.createUser({
