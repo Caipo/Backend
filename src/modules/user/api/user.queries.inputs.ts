@@ -1,2 +1,1 @@
-export class GetUserInput{
-}
+export class GetUserInput {}

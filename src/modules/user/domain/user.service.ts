@@ -1,9 +1,7 @@
 import { ClassProvider, Inject, Injectable } from "@nestjs/common";
 import {
 	ServiceCreateUserInput,
-	ServiceGetUsersInput,
 	ServiceUser,
-    ServiceUserList,
 	UserServiceDefinition,
 	UserServiceName,
 } from "src/modules/user/domain/user.service.types";
@@ -23,11 +21,20 @@ export class UserService implements UserServiceDefinition {
 			useClass: UserService,
 		};
 	}
-    async getUsers({}: ServiceGetUsersInput):  Promise<ServiceUserList>{
-        console.log('get user Service')
-        const data = await this.userRepository.getUsers({});
-        return data;
-    }
+
+	async getUsers(): Promise<ServiceUser[]> {
+		const repoUsers = await this.userRepository.getUsers();
+
+		const serviceUsers: ServiceUser[] = repoUsers.map((repoUser) => ({
+			id: repoUser.id,
+			profilePictureUrl: repoUser.profilePictureUrl,
+			displayName: repoUser.displayName,
+			username: repoUser.username,
+			biography: repoUser.biography,
+		}));
+
+		return serviceUsers;
+	}
 
 	async createUser({ username, password }: ServiceCreateUserInput): Promise<ServiceUser> {
 		const repoUser: RepoUser = await this.userRepository.createUser({ username: username, password: password });

@@ -1,14 +1,12 @@
 import { ClassProvider, Injectable } from "@nestjs/common";
 import {
 	RepoCreateUserInput,
-	RepoGetUsersInput,
 	RepoUser,
-	RepoUserList,
 	UserRepositoryDefinition,
 	UserRepositoryName,
 } from "src/modules/user/repository/user.repository.types";
 import { DataSource } from "typeorm";
-import {UserRecord} from "src/core/infrastructure/entities/User";
+import { UserRecord } from "src/core/infrastructure/entities/User";
 
 @Injectable()
 export class UserRepository implements UserRepositoryDefinition {
@@ -21,11 +19,20 @@ export class UserRepository implements UserRepositoryDefinition {
 		};
 	}
 
-    async getUsers({} : RepoGetUsersInput): Promise<RepoUserList>{
-        const data  =  await this.dataSource.getRepository(UserRecord).find()
-        const list : RepoUserList = {users : data}
-        return list;
-    }
+	async getUsers(): Promise<RepoUser[]> {
+		const userRecords = await this.dataSource.getRepository(UserRecord).find();
+
+		const repoUsers: RepoUser[] = userRecords.map((userRecord) => ({
+			id: userRecord.id,
+			profilePictureUrl: userRecord.profilePictureUrl,
+			displayName: userRecord.displayName,
+			username: userRecord.username,
+			password: userRecord.password,
+			biography: userRecord.biography,
+			createdAt: userRecord.createdAt,
+		}));
+		return repoUsers;
+	}
 
 	async createUser({ username, password }: RepoCreateUserInput): Promise<RepoUser> {
 		const userToSave = {
@@ -35,7 +42,7 @@ export class UserRepository implements UserRepositoryDefinition {
 			password: password,
 			biography: "biography",
 			createdAt: BigInt(15),
-		}
+		};
 
 		const savedUserRecord = await this.dataSource.getRepository(UserRecord).save(userToSave);
 
