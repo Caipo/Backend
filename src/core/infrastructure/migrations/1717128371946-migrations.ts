@@ -1,8 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class Migrations1717128371946 implements MigrationInterface {
-
-    public async up(queryRunner: QueryRunner): Promise<void> {
+	public async up(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.query(`
             CREATE TABLE "tribe_messages" (
                 "id" uuid NOT NULL UNIQUE DEFAULT uuid_generate_v4(),
@@ -13,12 +12,11 @@ export class Migrations1717128371946 implements MigrationInterface {
                 CONSTRAINT "PK_message_id" PRIMARY KEY ("id")
             )
         `);
-    }
+	}
 
-    public async down(queryRunner: QueryRunner): Promise<void> {
+	public async down(queryRunner: QueryRunner): Promise<void> {
 		await queryRunner.query(`
             DROP TABLE "tribe_messages"
         `);
-    }
-
+	}
 }

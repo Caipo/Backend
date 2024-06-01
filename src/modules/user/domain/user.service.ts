@@ -42,7 +42,6 @@ export class UserService implements UserServiceDefinition {
 		const hash: string = CryptoJS.SHA256(password).toString();
 		const createdAt: bigint = BigInt(Date.now());
 		const defaultBiography: string = "Defualt Bio";
-
 		const randomIndex: number = Math.floor(Math.random() * profilePictures.length);
 		const profilePictureUrl: string = profilePictures[randomIndex];
 

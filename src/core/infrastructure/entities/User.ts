@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { UserSessionRecord } from "./Auth";
+import { MessageRecord } from "./Message";
 
 @Entity({ name: "users" })
 export class UserRecord {
@@ -23,6 +24,9 @@ export class UserRecord {
 
 	@Column({ name: "created_at", type: "bigint" })
 	createdAt: bigint;
+
+	@OneToMany(() => MessageRecord, (message) => message.senderId)
+	messages: MessageRecord[];
 
 	@OneToMany(() => UserSessionRecord, (session) => session.user)
 	sessions: UserSessionRecord[];
