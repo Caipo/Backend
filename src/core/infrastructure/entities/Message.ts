@@ -1,7 +1,8 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Unique, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { UserRecord } from "./User";
 
 @Entity({ name: "tribe_messages" })
+@Unique(['id'])
 export class MessageRecord {
 	@PrimaryGeneratedColumn("uuid", { name: "id" })
 	id: string;

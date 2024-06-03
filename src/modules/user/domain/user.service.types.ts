@@ -1,8 +1,9 @@
 export const UserServiceName = "UserService";
 
 export interface UserServiceDefinition {
-	createUser(input: ServiceCreateUserInput): Promise<ServiceUser>;
+	createUser(input : ServiceCreateUserInput): Promise<ServiceUser>;
 	getUsers(): Promise<ServiceUser[]>;
+    getUserByUsername(input : ServiceGetUserByUsernameInput ): Promise<ServiceUser | number>;
 }
 
 /***** TYPES *****/
@@ -11,6 +12,7 @@ export type ServiceUser = {
 	profilePictureUrl: string;
 	displayName: string;
 	username: string;
+    hash: string;
 	biography: string;
 };
 
@@ -18,4 +20,9 @@ export type ServiceUser = {
 export type ServiceCreateUserInput = {
 	username: string;
 	password: string;
+};
+
+/***** INPUTS *****/
+export type ServiceGetUserByUsernameInput = {
+    username: string;
 };

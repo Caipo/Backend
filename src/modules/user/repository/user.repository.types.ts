@@ -2,7 +2,8 @@ export const UserRepositoryName = "UserRepository";
 
 export interface UserRepositoryDefinition {
 	createUser(input: RepoCreateUserInput): Promise<RepoUser>;
-	getUsers(): Promise<RepoUser[]>;
+    getUsers(): Promise<RepoUser[]>;
+	getUserByUsername(input : RepoGetUserByUsernameInput): Promise<RepoUser | number>;
 }
 
 /***** TYPES *****/
@@ -11,7 +12,7 @@ export type RepoUser = {
 	profilePictureUrl: string;
 	displayName: string;
 	username: string;
-	password: string;
+	hash: string;
 	biography: string;
 	createdAt: bigint;
 };
@@ -19,8 +20,12 @@ export type RepoUser = {
 /***** INPUTS *****/
 export type RepoCreateUserInput = {
 	username: string;
-	password: string;
+	hash: string;
 	biography: string;
 	profilePictureUrl: string;
 	createdAt: bigint;
+};
+
+export type RepoGetUserByUsernameInput = {
+	username: string;
 };

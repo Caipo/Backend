@@ -2,6 +2,9 @@ export const Paths = {
 	root: "/",
 	auth: {
 		root: "auth",
+		mutations: {
+			login: "login",
+		},
 	},
 	message: {
 		root: "message",
@@ -18,7 +21,6 @@ export const Paths = {
 			getUsers: "users",
 		},
 		mutations: {
-			login: "login",
 			createUser: "create-user",
 		},
 	},

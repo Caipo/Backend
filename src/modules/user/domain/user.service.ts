@@ -1,6 +1,7 @@
 import { ClassProvider, Inject, Injectable } from "@nestjs/common";
 import {
 	ServiceCreateUserInput,
+	ServiceGetUserByUsernameInput,
 	ServiceUser,
 	UserServiceDefinition,
 	UserServiceName,
@@ -11,7 +12,9 @@ import {
 	UserRepositoryName,
 } from "src/modules/user/repository/user.repository.types";
 import { profilePictures } from "src/modules/user/domain/pictures";
+import { SALT } from "src/modules/auth/domain/auth.service"
 import CryptoJS = require("crypto-js");
+
 
 @Injectable()
 export class UserService implements UserServiceDefinition {
@@ -24,6 +27,26 @@ export class UserService implements UserServiceDefinition {
 		};
 	}
 
+
+    async getUserByUsername({username} : ServiceGetUserByUsernameInput): Promise<ServiceUser | number> {
+        const repoUser = await this.userRepository.getUserByUsername({username : username});
+        
+        if (typeof(repoUser) == 'number'){
+            return repoUser;
+        }
+
+		const serviceUsers : ServiceUser = {
+			id: repoUser.id,
+			profilePictureUrl: repoUser.profilePictureUrl,
+			displayName: repoUser.displayName,
+			username: repoUser.username,
+            hash: repoUser.hash,
+			biography: repoUser.biography,
+		};
+
+		return serviceUsers;
+	}
+
 	async getUsers(): Promise<ServiceUser[]> {
 		const repoUsers = await this.userRepository.getUsers();
 
@@ -32,6 +55,7 @@ export class UserService implements UserServiceDefinition {
 			profilePictureUrl: repoUser.profilePictureUrl,
 			displayName: repoUser.displayName,
 			username: repoUser.username,
+            hash: repoUser.hash,
 			biography: repoUser.biography,
 		}));
 
@@ -39,7 +63,7 @@ export class UserService implements UserServiceDefinition {
 	}
 
 	async createUser({ username, password }: ServiceCreateUserInput): Promise<ServiceUser> {
-		const hash: string = CryptoJS.SHA256(password).toString();
+		const hash: string = CryptoJS.SHA256(password + SALT).toString();
 		const createdAt: bigint = BigInt(Date.now());
 		const defaultBiography: string = "Defualt Bio";
 		const randomIndex: number = Math.floor(Math.random() * profilePictures.length);
@@ -47,7 +71,7 @@ export class UserService implements UserServiceDefinition {
 
 		const repoUser: RepoUser = await this.userRepository.createUser({
 			username: username,
-			password: hash,
+			hash: hash,
 			createdAt: createdAt,
 			biography: defaultBiography,
 			profilePictureUrl: profilePictureUrl,
@@ -58,6 +82,7 @@ export class UserService implements UserServiceDefinition {
 			profilePictureUrl: repoUser.profilePictureUrl,
 			displayName: repoUser.displayName,
 			username: repoUser.username,
+            hash: repoUser.hash,
 			biography: repoUser.biography,
 		};
 

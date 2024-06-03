@@ -1,6 +1,7 @@
 import { ClassProvider, Injectable } from "@nestjs/common";
 import {
 	RepoCreateUserInput,
+	RepoGetUserByUsernameInput,
 	RepoUser,
 	UserRepositoryDefinition,
 	UserRepositoryName,
@@ -19,6 +20,26 @@ export class UserRepository implements UserRepositoryDefinition {
 		};
 	}
 
+    async getUserByUsername({username} : RepoGetUserByUsernameInput ): Promise<RepoUser | number> {
+        const userRecord = await this.dataSource.getRepository(UserRecord).findOne({ where: { username: username } });
+        
+        if (!userRecord){
+            return 404;
+        }
+
+		const repoUsers: RepoUser = {
+			id: userRecord.id,
+			profilePictureUrl: userRecord.profilePictureUrl,
+			displayName: userRecord.displayName,
+			username: userRecord.username,
+			hash: userRecord.password,
+			biography: userRecord.biography,
+			createdAt: userRecord.createdAt,
+		};
+		return repoUsers;
+	}
+
+
 	async getUsers(): Promise<RepoUser[]> {
 		const userRecords = await this.dataSource.getRepository(UserRecord).find();
 
@@ -27,7 +48,7 @@ export class UserRepository implements UserRepositoryDefinition {
 			profilePictureUrl: userRecord.profilePictureUrl,
 			displayName: userRecord.displayName,
 			username: userRecord.username,
-			password: userRecord.password,
+			hash: userRecord.password,
 			biography: userRecord.biography,
 			createdAt: userRecord.createdAt,
 		}));
@@ -36,7 +57,7 @@ export class UserRepository implements UserRepositoryDefinition {
 
 	async createUser({
 		username,
-		password,
+		hash,
 		createdAt,
 		profilePictureUrl,
 		biography,
@@ -45,7 +66,7 @@ export class UserRepository implements UserRepositoryDefinition {
 			profilePictureUrl: profilePictureUrl,
 			displayName: username,
 			username: username,
-			password: password,
+			password: hash,
 			biography: biography,
 			createdAt: createdAt,
 		};
@@ -56,7 +77,7 @@ export class UserRepository implements UserRepositoryDefinition {
 			profilePictureUrl: savedUserRecord.profilePictureUrl,
 			displayName: savedUserRecord.displayName,
 			username: savedUserRecord.username,
-			password: savedUserRecord.password,
+			hash: savedUserRecord.password,
 			biography: savedUserRecord.biography,
 			createdAt: savedUserRecord.createdAt,
 		};
