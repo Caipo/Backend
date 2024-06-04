@@ -30,6 +30,8 @@ export class UserService implements UserServiceDefinition {
 
     async getUserByUsername({username} : ServiceGetUserByUsernameInput): Promise<ServiceUser | number> {
         const repoUser = await this.userRepository.getUserByUsername({username : username});
+
+        console.log(repoUser)
         
         if (typeof(repoUser) == 'number'){
             return repoUser;

@@ -1,6 +1,7 @@
 import { ClassProvider, Inject, Injectable } from "@nestjs/common";
 import {
 	ServiceLoginInput,
+	ServiceCheckTokenInput,
 	ServiceAuth,
 	AuthServiceDefinition,
 	AuthServiceName,
@@ -11,8 +12,8 @@ import {
 	AuthRepositoryDefinition,
 	AuthRepositoryName,
 } from "src/modules/auth/repository/auth.repository.types";
-import CryptoJS = require("crypto-js");
-import crypto = require("crypto");
+import CryptoJS = require("crypto-js"); // hash
+import crypto = require("crypto"); // token
 
 const VALID_TOKEN_TIME = (2628n * 10000n ); // Amount of seconds in a mounth
 export const SALT = '3b7f9e2c1d4a5e6b7c8f0a1d9e3b2c4d';
@@ -62,7 +63,24 @@ export class AuthService implements AuthServiceDefinition {
             expiredAt : repoAuth.expiredAt,
             userId : repoAuth.userId,
         };
+        }
+    
+    async checkToken({token, userId} : ServiceCheckTokenInput): Promise<number>{
+            const repoAuth = await this.authRepository.getCsrf({token});
+            
+            if(typeof(repoAuth) == 'number'){
+                return 403; 
+            }
+
+            if(repoAuth.userId != userId){
+                return 403;
+            }
+
+            if(repoAuth.expiredAt < BigInt(Date.now())){
+                return 401;
+            }
 
 
-	}
+            return 200;
+        };
 }

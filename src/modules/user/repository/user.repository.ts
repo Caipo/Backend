@@ -22,7 +22,7 @@ export class UserRepository implements UserRepositoryDefinition {
 
     async getUserByUsername({username} : RepoGetUserByUsernameInput ): Promise<RepoUser | number> {
         const userRecord = await this.dataSource.getRepository(UserRecord).findOne({ where: { username: username } });
-        
+        console.log(username);
         if (!userRecord){
             return 404;
         }

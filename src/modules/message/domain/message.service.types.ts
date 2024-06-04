@@ -1,7 +1,7 @@
 export const MessageServiceName = "MessageService";
 
 export interface MessageServiceDefinition {
-	createMessage(input: ServiceCreateMessageInput): Promise<ServiceMessage>;
+	createMessage(input: ServiceCreateMessageInput): Promise<ServiceMessage | number>;
 	getMessages(): Promise<ServiceMessage[]>;
 }
 
@@ -15,4 +15,6 @@ export type ServiceMessage = {
 /***** INPUTS *****/
 export type ServiceCreateMessageInput = {
 	message: string;
+    token: string;
+    userId: string;
 };

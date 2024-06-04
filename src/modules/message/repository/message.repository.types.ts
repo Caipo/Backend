@@ -1,5 +1,5 @@
 import { UserRecord } from "src/core/infrastructure/entities/User";
-export const MessageRepositoryName = "UserRepository";
+export const MessageRepositoryName = "MessageRepository";
 
 export interface MessageRepositoryDefinition {
 	createMessage(input: RepoCreateMessageInput): Promise<RepoMessage>;

@@ -5,6 +5,7 @@ import {
 	MessageServiceDefinition,
 	MessageServiceName,
 } from "src/modules/message/domain/message.service.types";
+import { AuthServiceDefinition, AuthServiceName } from "src/modules/auth/domain/auth.service.types";
 import {
 	RepoMessage,
 	MessageRepositoryDefinition,
@@ -13,7 +14,9 @@ import {
 
 @Injectable()
 export class MessageService implements MessageServiceDefinition {
-	constructor(@Inject(MessageRepositoryName) private readonly messageRepository: MessageRepositoryDefinition) {}
+    constructor( @Inject(MessageRepositoryName) private readonly messageRepository: MessageRepositoryDefinition,
+                @Inject(AuthServiceName) private authService: AuthServiceDefinition) {}
+
 
 	public static Provider(): ClassProvider<MessageService> {
 		return {
@@ -32,8 +35,16 @@ export class MessageService implements MessageServiceDefinition {
 		}));
 	}
 
-	async createMessage({ message }: ServiceCreateMessageInput): Promise<ServiceMessage> {
+	async createMessage({ message, token, userId }: ServiceCreateMessageInput): Promise<ServiceMessage | number> {
+        const authCode = await this.authService.checkToken({token, userId});
+
+        if(authCode != 200){
+            return authCode;
+        }
+
 		const createdAt: bigint = BigInt(Date.now());
+
+		const repoMessages: RepoMessage[] = await this.messageRepository.getMessages();
 		const repoUser: RepoMessage = await this.messageRepository.createMessage({
 			message: message,
 			createdAt: createdAt,

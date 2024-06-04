@@ -1,6 +1,7 @@
 import { ClassProvider, Injectable } from "@nestjs/common";
 import {
 	RepoLoginInput,
+	ReopGetCsrfInput,
 	RepoAuth,
 	AuthRepositoryDefinition,
 	AuthRepositoryName,
@@ -39,4 +40,23 @@ export class AuthRepository implements AuthRepositoryDefinition {
 
 		return repoAuth;
 	}
+    async getCsrf({token} : ReopGetCsrfInput): Promise< RepoAuth | number>{
+        const userSessionRecord = await this.dataSource.getRepository(UserSessionRecord).findOne({ where: { token: token } });
+
+        if(!userSessionRecord){
+            return 404;
+        }
+
+        console.log(userSessionRecord.user)
+
+		const repoAuth: RepoAuth = {
+			token: userSessionRecord.token,
+			userId: '51841757-4f59-4f7b-84f1-7a12d47121c7',
+            status: 201,
+			createdAt: userSessionRecord.createdAt,
+			expiredAt: userSessionRecord.expiredAt,
+		};
+        return repoAuth;
+
+    };
 }

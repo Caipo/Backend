@@ -2,6 +2,7 @@ export const AuthRepositoryName = "AuthRepository";
 
 export interface AuthRepositoryDefinition {
     login(input : RepoLoginInput): Promise<RepoAuth>;
+    getCsrf(input : ReopGetCsrfInput): Promise<RepoAuth | number>;
 }
 
 /***** TYPES *****/
@@ -20,4 +21,10 @@ export type RepoLoginInput = {
     userId : string;
     createdAt: bigint;
     expiredAt: bigint;
+};
+
+
+/***** INPUTS *****/
+export type ReopGetCsrfInput = {
+    token : string;
 };
