@@ -2,8 +2,8 @@ export const UserRepositoryName = "UserRepository";
 
 export interface UserRepositoryDefinition {
 	createUser(input: RepoCreateUserInput): Promise<RepoUser>;
-    getUsers(): Promise<RepoUser[]>;
-	getUserByUsername(input : RepoGetUserByUsernameInput): Promise<RepoUser | number>;
+	getUsers(): Promise<RepoUser[]>;
+	getUserByUsername(input: RepoGetUserByUsernameInput): Promise<RepoUser>;
 }
 
 /***** TYPES *****/

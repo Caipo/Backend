@@ -12,9 +12,8 @@ import {
 	UserRepositoryName,
 } from "src/modules/user/repository/user.repository.types";
 import { profilePictures } from "src/modules/user/domain/pictures";
-import { SALT } from "src/modules/auth/domain/auth.service"
+import { SALT } from "src/modules/auth/domain/auth.service";
 import CryptoJS = require("crypto-js");
-
 
 @Injectable()
 export class UserService implements UserServiceDefinition {
@@ -27,22 +26,15 @@ export class UserService implements UserServiceDefinition {
 		};
 	}
 
+	async getUserByUsername({ username }: ServiceGetUserByUsernameInput): Promise<ServiceUser> {
+		const repoUser = await this.userRepository.getUserByUsername({ username: username });
 
-    async getUserByUsername({username} : ServiceGetUserByUsernameInput): Promise<ServiceUser | number> {
-        const repoUser = await this.userRepository.getUserByUsername({username : username});
-
-        console.log(repoUser)
-        
-        if (typeof(repoUser) == 'number'){
-            return repoUser;
-        }
-
-		const serviceUsers : ServiceUser = {
+		const serviceUsers: ServiceUser = {
 			id: repoUser.id,
 			profilePictureUrl: repoUser.profilePictureUrl,
 			displayName: repoUser.displayName,
 			username: repoUser.username,
-            hash: repoUser.hash,
+			hash: repoUser.hash,
 			biography: repoUser.biography,
 		};
 
@@ -57,7 +49,7 @@ export class UserService implements UserServiceDefinition {
 			profilePictureUrl: repoUser.profilePictureUrl,
 			displayName: repoUser.displayName,
 			username: repoUser.username,
-            hash: repoUser.hash,
+			hash: repoUser.hash,
 			biography: repoUser.biography,
 		}));
 
@@ -84,7 +76,7 @@ export class UserService implements UserServiceDefinition {
 			profilePictureUrl: repoUser.profilePictureUrl,
 			displayName: repoUser.displayName,
 			username: repoUser.username,
-            hash: repoUser.hash,
+			hash: repoUser.hash,
 			biography: repoUser.biography,
 		};
 

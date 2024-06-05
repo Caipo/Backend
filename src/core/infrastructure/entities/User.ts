@@ -1,11 +1,13 @@
 import { Column, Entity, Unique, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { UserSessionRecord } from "./Auth";
+import { TribeRecord } from "./Tribe";
 import { MessageRecord } from "./Message";
 
 @Entity({ name: "users" })
-@Unique(['id'])
+@Unique(["id"])
 export class UserRecord {
 	@PrimaryGeneratedColumn("uuid", { name: "id" })
+	@OneToMany(() => UserSessionRecord, (session) => session.user)
 	id: string;
 
 	@Column({ name: "profile_picture_url", type: "varchar", length: 500 })
@@ -28,6 +30,10 @@ export class UserRecord {
 
 	@OneToMany(() => MessageRecord, (message) => message.senderId)
 	messages: MessageRecord[];
+
+	@OneToMany(() => TribeRecord, (tribe) => tribe.id)
+    tribeId : string;
+
 
 	@OneToMany(() => UserSessionRecord, (session) => session.user)
 	sessions: UserSessionRecord[];

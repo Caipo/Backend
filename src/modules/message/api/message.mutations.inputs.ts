@@ -5,7 +5,6 @@ export class CreateMessageInput {
 	message: string;
 }
 
-export class RequestHeaders {
-    csrf: string;
-    userid: string;
+export class CreateMessageHeaders {
+	csrf: string;
 }

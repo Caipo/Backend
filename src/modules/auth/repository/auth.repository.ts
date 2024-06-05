@@ -1,4 +1,4 @@
-import { ClassProvider, Injectable } from "@nestjs/common";
+import { ClassProvider, Injectable, HttpException,  HttpStatus } from "@nestjs/common";
 import {
 	RepoLoginInput,
 	ReopGetCsrfInput,
@@ -20,7 +20,7 @@ export class AuthRepository implements AuthRepositoryDefinition {
 		};
 	}
 
-    async login({token, userId, createdAt, expiredAt} : RepoLoginInput): Promise<RepoAuth> {
+	async login({ token, userId, createdAt, expiredAt }: RepoLoginInput): Promise<RepoAuth> {
 		const authToSave = {
 			token: token,
 			userId: userId,
@@ -33,30 +33,31 @@ export class AuthRepository implements AuthRepositoryDefinition {
 		const repoAuth: RepoAuth = {
 			token: savedUserRecord.token,
 			userId: savedUserRecord.userId,
-            status: 201,
+			status: 201,
 			createdAt: savedUserRecord.createdAt,
 			expiredAt: savedUserRecord.expiredAt,
 		};
 
 		return repoAuth;
 	}
-    async getCsrf({token} : ReopGetCsrfInput): Promise< RepoAuth | number>{
-        const userSessionRecord = await this.dataSource.getRepository(UserSessionRecord).findOne({ where: { token: token } });
 
-        if(!userSessionRecord){
-            return 404;
-        }
+	async getCsrf({ token }: ReopGetCsrfInput): Promise<RepoAuth> {
+		const userSessionRecord = await this.dataSource
+			.getRepository(UserSessionRecord)
+			.findOne({ where: { token: token } });
 
-        console.log(userSessionRecord.user)
+		if (!userSessionRecord) {
+            throw new HttpException('Token Not Found', HttpStatus.FORBIDDEN);
+		}
+
 
 		const repoAuth: RepoAuth = {
 			token: userSessionRecord.token,
-			userId: '51841757-4f59-4f7b-84f1-7a12d47121c7',
-            status: 201,
+			userId: "51841757-4f59-4f7b-84f1-7a12d47121c7",
+			status: 201,
 			createdAt: userSessionRecord.createdAt,
 			expiredAt: userSessionRecord.expiredAt,
 		};
-        return repoAuth;
-
-    };
+		return repoAuth;
+	}
 }

@@ -1,1 +1,3 @@
-export class GetUserInput {}
+export class GetMessageHeaders {
+	csrf: string;
+}

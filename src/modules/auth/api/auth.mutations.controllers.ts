@@ -16,16 +16,16 @@ export class AuthMutationsController {
 			password: input.password,
 		});
 
-        if(typeof(serviceUser) === "number"){
-            return serviceUser;
-        }
+		if (typeof serviceUser === "number") {
+			return serviceUser;
+		}
 
 		const apiUser: ApiAuth = {
-            status : serviceUser.status,
-            token : serviceUser.token,
-            userId : serviceUser.userId,
-            createdAt: serviceUser.createdAt.toString(),
-            expiredAt: serviceUser.expiredAt.toString(),
+			status: serviceUser.status,
+			token: serviceUser.token,
+			userId: serviceUser.userId,
+			createdAt: serviceUser.createdAt.toString(),
+			expiredAt: serviceUser.expiredAt.toString(),
 		};
 		return apiUser;
 	}

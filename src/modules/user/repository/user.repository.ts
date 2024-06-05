@@ -1,4 +1,4 @@
-import { ClassProvider, Injectable } from "@nestjs/common";
+import { ClassProvider, Injectable, HttpException,  HttpStatus} from "@nestjs/common";
 import {
 	RepoCreateUserInput,
 	RepoGetUserByUsernameInput,
@@ -20,12 +20,12 @@ export class UserRepository implements UserRepositoryDefinition {
 		};
 	}
 
-    async getUserByUsername({username} : RepoGetUserByUsernameInput ): Promise<RepoUser | number> {
-        const userRecord = await this.dataSource.getRepository(UserRecord).findOne({ where: { username: username } });
-        console.log(username);
-        if (!userRecord){
-            return 404;
-        }
+	async getUserByUsername({ username }: RepoGetUserByUsernameInput): Promise<RepoUser> {
+		const userRecord = await this.dataSource.getRepository(UserRecord).findOne({ where: { username: username } });
+
+		if (!userRecord) {
+            throw new HttpException('User Not Found', HttpStatus.NOT_FOUND);
+		}
 
 		const repoUsers: RepoUser = {
 			id: userRecord.id,
@@ -38,7 +38,6 @@ export class UserRepository implements UserRepositoryDefinition {
 		};
 		return repoUsers;
 	}
-
 
 	async getUsers(): Promise<RepoUser[]> {
 		const userRecords = await this.dataSource.getRepository(UserRecord).find();

@@ -24,4 +24,12 @@ export const Paths = {
 			createUser: "create-user",
 		},
 	},
+	tribe: {
+		root: "tribe",
+		queries: {
+			getTribes: "tribes",
+		},
+		mutations: {
+		},
+	},
 };

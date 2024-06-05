@@ -14,9 +14,14 @@ import { MessageRecord } from "src/core/infrastructure/entities/Message";
 @Module({
 	imports: [TypeOrmModule.forFeature([MessageRecord])],
 	controllers: [MessageQueriesController, MessageMutationsController],
-    providers: [MessageService.Provider(), MessageRepository.Provider(), 
-                AuthService.Provider(), AuthRepository.Provider(),
-                UserService.Provider(), UserRepository.Provider()],
+	providers: [
+		MessageService.Provider(),
+		MessageRepository.Provider(),
+		AuthService.Provider(),
+		AuthRepository.Provider(),
+		UserService.Provider(),
+		UserRepository.Provider(),
+	],
 	exports: [MessageServiceName],
 })
 export class MessageModule {}

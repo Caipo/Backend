@@ -1,9 +1,11 @@
 import { Module } from "@nestjs/common";
 import { AuthModule } from "src/modules/auth/auth.module";
 import { UserModule } from "src/modules/user/user.module";
+import { TribeModule } from "src/modules/tribe/tribe.module";
 import { MessageModule } from "src/modules/message/message.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { UserRecord } from "src/core/infrastructure/entities/User";
+import { TribeRecord } from "src/core/infrastructure/entities/Tribe";
 import { MessageRecord } from "src/core/infrastructure/entities/Message";
 import { UserSessionRecord } from "src/core/infrastructure/entities/Auth";
 
@@ -12,6 +14,7 @@ import { UserSessionRecord } from "src/core/infrastructure/entities/Auth";
 		AuthModule,
 		UserModule,
 		MessageModule,
+        TribeModule,
 		TypeOrmModule.forRoot({
 			type: "postgres",
 			host: "localhost",
@@ -19,7 +22,7 @@ import { UserSessionRecord } from "src/core/infrastructure/entities/Auth";
 			username: "postgres",
 			password: "password",
 			database: "tribal",
-			entities: [UserRecord, UserSessionRecord, MessageRecord],
+			entities: [UserRecord, UserSessionRecord, MessageRecord, TribeRecord],
 			migrations: ["dist/core/infrastructure/migrations/*.js"],
 			retryAttempts: 3,
 			migrationsRun: true,

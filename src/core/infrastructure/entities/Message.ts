@@ -2,7 +2,7 @@ import { Column, Entity, Unique, JoinColumn, ManyToOne, PrimaryGeneratedColumn }
 import { UserRecord } from "./User";
 
 @Entity({ name: "tribe_messages" })
-@Unique(['id'])
+@Unique(["id"])
 export class MessageRecord {
 	@PrimaryGeneratedColumn("uuid", { name: "id" })
 	id: string;

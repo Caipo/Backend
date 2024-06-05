@@ -2,12 +2,12 @@ import { Column, Entity, Unique, ManyToOne, PrimaryGeneratedColumn } from "typeo
 import { UserRecord } from "./User";
 
 @Entity({ name: "user_sessions" })
-@Unique(['id', 'token'])
+@Unique(["id", "token"])
 export class UserSessionRecord {
 	@PrimaryGeneratedColumn("uuid", { name: "id" })
 	id: string;
 
-	@Column({ name: "token", type: "varchar", length: 32})
+	@Column({ name: "token", type: "varchar", length: 32 })
 	token: string;
 
 	@Column({ name: "created_at", type: "bigint" })

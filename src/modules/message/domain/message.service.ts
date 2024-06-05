@@ -1,6 +1,7 @@
 import { ClassProvider, Inject, Injectable } from "@nestjs/common";
 import {
 	ServiceCreateMessageInput,
+	ServiceGetMessageInput,
 	ServiceMessage,
 	MessageServiceDefinition,
 	MessageServiceName,
@@ -14,9 +15,10 @@ import {
 
 @Injectable()
 export class MessageService implements MessageServiceDefinition {
-    constructor( @Inject(MessageRepositoryName) private readonly messageRepository: MessageRepositoryDefinition,
-                @Inject(AuthServiceName) private authService: AuthServiceDefinition) {}
-
+	constructor(
+		@Inject(MessageRepositoryName) private readonly messageRepository: MessageRepositoryDefinition,
+		@Inject(AuthServiceName) private authService: AuthServiceDefinition,
+	) {}
 
 	public static Provider(): ClassProvider<MessageService> {
 		return {
@@ -25,33 +27,31 @@ export class MessageService implements MessageServiceDefinition {
 		};
 	}
 
-	async getMessages(): Promise<ServiceMessage[]> {
+	async getMessages({ token }: ServiceGetMessageInput): Promise<ServiceMessage[]> {
+		const serviceAuth = await this.authService.checkToken({ token });
+
 		const repoMessages: RepoMessage[] = await this.messageRepository.getMessages();
 
 		return repoMessages.map((repoMessage) => ({
 			id: repoMessage.id,
+            senderId: serviceAuth.userId,
 			message: repoMessage.message,
 			createdAt: repoMessage.createdAt,
 		}));
 	}
 
-	async createMessage({ message, token, userId }: ServiceCreateMessageInput): Promise<ServiceMessage | number> {
-        const authCode = await this.authService.checkToken({token, userId});
-
-        if(authCode != 200){
-            return authCode;
-        }
+	async createMessage({ message, token }: ServiceCreateMessageInput): Promise<ServiceMessage> {
+		const serviceAuth = await this.authService.checkToken({ token });
 
 		const createdAt: bigint = BigInt(Date.now());
-
-		const repoMessages: RepoMessage[] = await this.messageRepository.getMessages();
 		const repoUser: RepoMessage = await this.messageRepository.createMessage({
 			message: message,
 			createdAt: createdAt,
 		});
 
-		const serviceMessage: ServiceMessage = {
+		const serviceMessage: ServiceMessage = { 
 			id: repoUser.id,
+            senderId: serviceAuth.userId,
 			message: repoUser.message,
 			createdAt: repoUser.createdAt,
 		};

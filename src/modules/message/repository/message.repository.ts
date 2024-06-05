@@ -34,9 +34,7 @@ export class MessageRepository implements MessageRepositoryDefinition {
 			message: message,
 			createdAt: createdAt,
 		};
-
 		const savedMessageRecord = await this.dataSource.getRepository(MessageRecord).save(messageToSave);
-
 		const repoMessage: RepoMessage = {
 			id: savedMessageRecord.id,
 			senderId: savedMessageRecord.senderId,
