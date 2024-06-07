@@ -1,12 +1,13 @@
-import { ClassProvider, Injectable } from "@nestjs/common";
+import { ClassProvider, Injectable, HttpException, HttpStatus } from "@nestjs/common";
 import {
 	RepoCreateUserInput,
+	RepoGetUserByUsernameInput,
 	RepoUser,
 	UserRepositoryDefinition,
 	UserRepositoryName,
 } from "src/modules/user/repository/user.repository.types";
 import { DataSource } from "typeorm";
-import {UserRecord} from "src/core/infrastructure/entities/User";
+import { UserRecord } from "src/core/infrastructure/entities/User";
 
 @Injectable()
 export class UserRepository implements UserRepositoryDefinition {
@@ -19,6 +20,25 @@ export class UserRepository implements UserRepositoryDefinition {
 		};
 	}
 
+	async getUserByUsername({ username }: RepoGetUserByUsernameInput): Promise<RepoUser> {
+		const userRecord = await this.dataSource.getRepository(UserRecord).findOne({ where: { username: username } });
+
+		if (!userRecord) {
+			throw new HttpException("User Not Found", HttpStatus.NOT_FOUND);
+		}
+
+		const repoUsers: RepoUser = {
+			id: userRecord.id,
+			profilePictureUrl: userRecord.profilePictureUrl,
+			displayName: userRecord.displayName,
+			username: userRecord.username,
+			password: userRecord.password,
+			biography: userRecord.biography,
+			createdAt: userRecord.createdAt,
+		};
+		return repoUsers;
+	}
+
 	async createUser({ username, password }: RepoCreateUserInput): Promise<RepoUser> {
 		const userToSave = {
 			profilePictureUrl: "url",
@@ -27,7 +47,7 @@ export class UserRepository implements UserRepositoryDefinition {
 			password: password,
 			biography: "biography",
 			createdAt: BigInt(15),
-		}
+		};
 
 		const savedUserRecord = await this.dataSource.getRepository(UserRecord).save(userToSave);
 
