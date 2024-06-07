@@ -8,7 +8,7 @@ import {
 import { UserServiceDefinition, UserServiceName, ServiceUser } from "src/modules/user/domain/user.service.types";
 import { randomBytes } from "crypto"; // CSRF
 
-const VALID_TOKEN_TIME: bigint = 2628n * 10000n; // Amount of seconds in a mounth
+const VALID_TOKEN_TIME: bigint = 2628n * 10000n; // Amount of seconds in a month
 
 @Injectable()
 export class AuthService implements AuthServiceDefinition {
