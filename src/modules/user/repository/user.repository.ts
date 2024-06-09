@@ -1,12 +1,13 @@
-import { ClassProvider, Injectable } from "@nestjs/common";
+import { ClassProvider, Injectable, HttpException, HttpStatus } from "@nestjs/common";
 import {
-	RepoCreateUserInput,
+	CreateUserInput,
 	RepoUser,
 	UserRepositoryDefinition,
+    CheckUsernameTakenInput,
 	UserRepositoryName,
 } from "src/modules/user/repository/user.repository.types";
 import { DataSource } from "typeorm";
-import {UserRecord} from "src/core/infrastructure/entities/User";
+import { UserRecord } from "src/core/infrastructure/entities/User";
 
 @Injectable()
 export class UserRepository implements UserRepositoryDefinition {
@@ -18,16 +19,22 @@ export class UserRepository implements UserRepositoryDefinition {
 			useClass: UserRepository,
 		};
 	}
+	async createUser({
+		username,
+		password,
+		createdAt,
+		profilePictureUrl,
+		biography,
+	    }: CreateUserInput): Promise<RepoUser> {
 
-	async createUser({ username, password }: RepoCreateUserInput): Promise<RepoUser> {
 		const userToSave = {
-			profilePictureUrl: "url",
-			displayName: "displayName",
+			profilePictureUrl: profilePictureUrl,
+			displayName: username,
 			username: username,
 			password: password,
-			biography: "biography",
-			createdAt: BigInt(15),
-		}
+			biography: biography,
+			createdAt: createdAt,
+		};
 
 		const savedUserRecord = await this.dataSource.getRepository(UserRecord).save(userToSave);
 
@@ -43,4 +50,15 @@ export class UserRepository implements UserRepositoryDefinition {
 
 		return repoUser;
 	}
+
+	async checkUsernameTaken({ username }: CheckUsernameTakenInput): Promise<boolean> {
+		const userRecord = await this.dataSource.getRepository(UserRecord).findOne({ where: { username: username } });
+
+		if (!userRecord) {
+            return false;
+		}
+        return true;
+	}
+
+
 }

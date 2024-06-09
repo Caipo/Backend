@@ -1,7 +1,8 @@
 export const UserRepositoryName = "UserRepository";
 
 export interface UserRepositoryDefinition {
-	createUser(input: RepoCreateUserInput): Promise<RepoUser>;
+    checkUsernameTaken(input: CheckUsernameTakenInput) : Promise<boolean>;
+	createUser(input: CreateUserInput): Promise<RepoUser>;
 }
 
 /***** TYPES *****/
@@ -16,7 +17,15 @@ export type RepoUser = {
 };
 
 /***** INPUTS *****/
-export type RepoCreateUserInput = {
+export type CreateUserInput = {
 	username: string;
 	password: string;
+	biography: string;
+	profilePictureUrl: string;
+	createdAt: bigint;
 };
+
+export type CheckUsernameTakenInput = {
+	username: string;
+};
+

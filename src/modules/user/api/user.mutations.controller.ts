@@ -1,8 +1,8 @@
-import {Body, Controller, Inject, Post, UsePipes, ValidationPipe} from "@nestjs/common";
+import { Body, Controller, Inject, Post, UsePipes, ValidationPipe } from "@nestjs/common";
 import { Paths } from "src/core/api/routes";
-import {CreateUserInput} from "src/modules/user/api/user.mutations.inputs";
-import {ApiUser} from "src/modules/user/api/user.types";
-import {UserServiceDefinition, UserServiceName} from "src/modules/user/domain/user.service.types";
+import { CreateUserInput } from "src/modules/user/api/user.mutations.inputs";
+import { ApiUser } from "src/modules/user/api/user.types";
+import { UserServiceDefinition, UserServiceName } from "src/modules/user/domain/user.service.types";
 
 @Controller(Paths.user.root)
 @UsePipes(new ValidationPipe())
@@ -22,7 +22,7 @@ export class UserMutationsController {
 			displayName: serviceUser.displayName,
 			username: serviceUser.username,
 			biography: serviceUser.biography,
-		}
+		};
 
 		return apiUser;
 	}
