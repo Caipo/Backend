@@ -3,6 +3,15 @@ export const Paths = {
 	auth: {
 		root: "auth",
 	},
+	message: {
+		root: "message",
+		queries: {
+			getMessages: "messages",
+		},
+		mutations: {
+			createMessage: "create-message",
+		},
+	},
 	user: {
 		root: "user",
 		queries: {
