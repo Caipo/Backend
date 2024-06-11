@@ -6,7 +6,7 @@ import {
 	UserRepositoryName,
 } from "src/modules/user/repository/user.repository.types";
 import { DataSource } from "typeorm";
-import {UserRecord} from "src/core/infrastructure/entities/User";
+import { UserRecord } from "src/core/infrastructure/entities/User";
 
 @Injectable()
 export class UserRepository implements UserRepositoryDefinition {
@@ -27,7 +27,7 @@ export class UserRepository implements UserRepositoryDefinition {
 			password: password,
 			biography: "biography",
 			createdAt: BigInt(15),
-		}
+		};
 
 		const savedUserRecord = await this.dataSource.getRepository(UserRecord).save(userToSave);
 

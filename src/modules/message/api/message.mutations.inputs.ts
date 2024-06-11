@@ -1,9 +1,9 @@
 import { IsNotEmpty } from "class-validator";
 
-export class CreateUserInput {
+export class CreateMessageInput {
 	@IsNotEmpty()
-	username: string;
+	message: string;
 
 	@IsNotEmpty()
-	password: string;
+	userId: string;
 }

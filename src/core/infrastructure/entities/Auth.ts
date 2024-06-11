@@ -3,7 +3,7 @@ import { UserRecord } from "./User";
 
 @Entity({ name: "user_sessions" })
 export class UserSessionRecord {
-	@PrimaryGeneratedColumn("uuid",{ name: "id" })
+	@PrimaryGeneratedColumn("uuid", { name: "id" })
 	id: string;
 
 	@Column({ name: "created_at", type: "bigint" })
