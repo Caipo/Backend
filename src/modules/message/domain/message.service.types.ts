@@ -8,7 +8,7 @@ export interface MessageServiceDefinition {
 /***** TYPES *****/
 export type ServiceMessage = {
 	id: string;
-    senderId: string;
+	senderId: string;
 	message: string;
 	createdAt: bigint;
 };
@@ -16,5 +16,5 @@ export type ServiceMessage = {
 /***** INPUTS *****/
 export type ServiceCreateMessageInput = {
 	message: string;
-    userId: string;
+	userId: string;
 };

@@ -1,5 +1,5 @@
 export type ApiMessage = {
 	id: string;
-    senderId: string;
+	senderId: string;
 	message: string;
 };

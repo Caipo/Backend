@@ -7,4 +7,3 @@ export class CreateMessageInput {
 	@IsNotEmpty()
 	userId: string;
 }
-

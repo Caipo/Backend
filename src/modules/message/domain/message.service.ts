@@ -13,9 +13,7 @@ import {
 
 @Injectable()
 export class MessageService implements MessageServiceDefinition {
-	constructor(
-		@Inject(MessageRepositoryName) private readonly messageRepository: MessageRepositoryDefinition,
-	) {}
+	constructor(@Inject(MessageRepositoryName) private readonly messageRepository: MessageRepositoryDefinition) {}
 
 	public static Provider(): ClassProvider<MessageService> {
 		return {
@@ -25,28 +23,26 @@ export class MessageService implements MessageServiceDefinition {
 	}
 
 	async getMessages(): Promise<ServiceMessage[]> {
-
 		const repoMessages: RepoMessage[] = await this.messageRepository.getMessages();
 
 		return repoMessages.map((repoMessage) => ({
 			id: repoMessage.id,
-            senderId: repoMessage.senderId.id,
+			senderId: repoMessage.senderId.id,
 			message: repoMessage.message,
 			createdAt: repoMessage.createdAt,
 		}));
 	}
 
 	async createMessage({ message, userId }: ServiceCreateMessageInput): Promise<ServiceMessage> {
-
 		const createdAt: bigint = BigInt(Date.now());
 		const repoUser: RepoMessage = await this.messageRepository.createMessage({
 			message: message,
 			createdAt: createdAt,
 		});
 
-		const serviceMessage: ServiceMessage = { 
+		const serviceMessage: ServiceMessage = {
 			id: repoUser.id,
-            senderId: userId,
+			senderId: userId,
 			message: repoUser.message,
 			createdAt: repoUser.createdAt,
 		};
