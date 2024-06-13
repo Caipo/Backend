@@ -19,9 +19,8 @@ export class AuthRepository implements AuthRepositoryDefinition {
 		};
 	}
 
-	async login({ token, userId, createdAt, expiredAt }: RepoLoginInput): Promise<RepoAuth> {
+	async login({ userId, createdAt, expiredAt }: RepoLoginInput): Promise<RepoAuth> {
 		const authToSave = {
-			token: token,
 			userId: userId,
 			createdAt: createdAt,
 			expiredAt: expiredAt,
@@ -30,7 +29,6 @@ export class AuthRepository implements AuthRepositoryDefinition {
 		const savedUserRecord = await this.dataSource.getRepository(UserSessionRecord).save(authToSave);
 
 		const repoAuth: RepoAuth = {
-			token: savedUserRecord.token,
 			userId: savedUserRecord.userId,
 			createdAt: savedUserRecord.createdAt,
 			expiredAt: savedUserRecord.expiredAt,

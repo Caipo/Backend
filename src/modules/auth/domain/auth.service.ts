@@ -33,11 +33,7 @@ export class AuthService implements AuthServiceDefinition {
 			throw new HttpException("Passwords Is Incorrect", HttpStatus.FORBIDDEN);
 		}
 
-		// https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
-		var token = randomBytes(4).toString("hex");
-
 		const repoAuth: RepoAuth = await this.authRepository.login({
-			token: token,
 			userId: user.id,
 			createdAt: createdAt,
 			expiredAt: expiredAt,

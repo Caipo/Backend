@@ -9,9 +9,6 @@ export class UserSessionRecord {
 	@Column({ name: "created_at", type: "bigint" })
 	createdAt: bigint;
 
-	@Column({ name: "token", type: "varchar", length: 32 })
-	token: string;
-
 	@Column({ name: "expire_at", type: "bigint" })
 	expiredAt: bigint;
 

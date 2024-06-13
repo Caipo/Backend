@@ -6,7 +6,6 @@ export interface AuthRepositoryDefinition {
 
 /***** TYPES *****/
 export type RepoAuth = {
-	token: string;
 	userId: string;
 	createdAt: bigint;
 	expiredAt: bigint;
@@ -14,13 +13,8 @@ export type RepoAuth = {
 
 /***** INPUTS *****/
 export type RepoLoginInput = {
-	token: string;
 	userId: string;
 	createdAt: bigint;
 	expiredAt: bigint;
 };
 
-/***** INPUTS *****/
-export type ReopGetUserSessionInput = {
-	token: string;
-};
