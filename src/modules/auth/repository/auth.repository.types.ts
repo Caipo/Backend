@@ -17,4 +17,3 @@ export type RepoLoginInput = {
 	createdAt: bigint;
 	expiredAt: bigint;
 };
-
