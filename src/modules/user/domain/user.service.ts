@@ -1,6 +1,7 @@
 import { ClassProvider, Inject, Injectable } from "@nestjs/common";
 import {
 	ServiceCreateUserInput,
+	ServiceGetUserByUsernameInput,
 	ServiceUser,
 	UserServiceDefinition,
 	UserServiceName,
@@ -22,6 +23,21 @@ export class UserService implements UserServiceDefinition {
 		};
 	}
 
+	async getUserByUsername({ username }: ServiceGetUserByUsernameInput): Promise<ServiceUser> {
+		const repoUser = await this.userRepository.getUserByUsername({ username: username });
+
+		const serviceUsers: ServiceUser = {
+			id: repoUser.id,
+			profilePictureUrl: repoUser.profilePictureUrl,
+			displayName: repoUser.displayName,
+			username: repoUser.username,
+			password: repoUser.password,
+			biography: repoUser.biography,
+		};
+
+		return serviceUsers;
+	}
+
 	async createUser({ username, password }: ServiceCreateUserInput): Promise<ServiceUser> {
 		const repoUser: RepoUser = await this.userRepository.createUser({ username: username, password: password });
 
@@ -29,6 +45,7 @@ export class UserService implements UserServiceDefinition {
 			id: repoUser.id,
 			profilePictureUrl: repoUser.profilePictureUrl,
 			displayName: repoUser.displayName,
+			password: repoUser.password,
 			username: repoUser.username,
 			biography: repoUser.biography,
 		};
